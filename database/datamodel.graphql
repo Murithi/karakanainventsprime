@@ -1,0 +1,40 @@
+type VehicleOwner {
+  id: ID! @unique
+  name: String!
+  phone: String!
+  email: String!
+}
+
+type Vehicle{
+  id: ID! @unique
+  registrationNumber: String! @unique
+  logBookNumber: String! @unique
+  model: String!
+  fuelType: String!
+  insuranceValuation: Int
+  insuranceRenewalDate: DateTime
+  age:Int
+  owner:[VehicleOwner!]!
+}
+
+type VehicleRequisition{
+  id: ID! @unique
+  vehicleType: String!
+  estimatedNoOfHours:  Int!
+  project: String!
+  section: String!
+  estimatedCost: Int
+  requestStatus: String
+  requestApprovedBy: User @relation(name: "ApprovedRequests")
+  requestedBy: User @relation(name: "RequestsInitiated")
+}
+
+type User{
+  id: ID! @unique
+  name: String!
+  email: String! @unique
+  password: String!
+  approvedRequests: VehicleRequisition @relation(name: "ApprovedRequests")
+  requestsInitiated:[VehicleRequisition!]! @relation(name: "RequestsInitiated")
+  
+}
